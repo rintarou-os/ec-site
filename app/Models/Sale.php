@@ -23,17 +23,17 @@ class Sale extends Model
         return $this->belongsTo(Product::class);
     }
     //購入処理
-    public static function createSale(Product $product, int $quantity)
+    public static function createSale(Product $product, int $quantity, $userId = null)
     {
         self::create([
-            'user_id' => Auth::id(),
+            'user_id' => $userId ?? Auth::id(),
             'product_id' => $product->id,
             'quantity' => $quantity,
         ]);
 
         $product->update(['stock' => $product->stock - $quantity]);
-
-    } 
+    }
+    
     //ユーザの購入履歴所得
     public static function getSalesByUser($userId)
     {

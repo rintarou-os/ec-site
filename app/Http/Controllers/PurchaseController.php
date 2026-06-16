@@ -35,11 +35,12 @@ class PurchaseController extends Controller
         $validatedData = $request->validate([
             'product_id' => 'required|integer',
             'quantity' => 'required|integer|min:1',
+            'user_id' => 'required|integer',
         ]);
 
         $product = Product::findOrFail($validatedData['product_id']);
 
-        Sale::createSale($product, $validatedData['quantity']);
+        Sale::createSale($product, $validatedData['quantity'],$validatedData['user_id']);
 
         return response()->json([
             'message' => '購入が完了しました',

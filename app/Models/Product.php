@@ -74,16 +74,6 @@ class Product extends Model
             'img_path' => $imgPath,
         ]);
     }
-    //商品更新
-    public static function updateProduct(Product $product,array $validatedData,$imgPath)
-    {
-        $product->update([
-        'product_name' => $validatedData['product_name'],
-        'price' => $validatedData['price'],
-        'stock' => $validatedData['stock'],
-        'img_path' => $imgPath ?? $product->img_path,
-        ]);
-    }
 
     //商品削除
     public static function deleteProduct(Product $product)
