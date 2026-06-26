@@ -17,6 +17,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
+
         Schema::table('users', function (Blueprint $table) {
             $table->foreign('company_id')->references('id')->on('companies')->cascadeOnDelete();
         });
@@ -26,7 +27,12 @@ return new class extends Migration
      * Reverse the migrations.
      */
     public function down(): void
-    {
-        Schema::dropIfExists('companies');
-    }
+{
+    Schema::table('users', function (Blueprint $table) {
+        $table->dropForeign(['company_id']);
+    });
+
+    Schema::dropIfExists('companies');
+}
+
 };

@@ -20,6 +20,8 @@
                     <ul class="navbar-nav ms-auto">
                         @auth
                             <li class="nav-item">
+                                <span class="nav-link">ログインユーザー:{{ Auth::user()->name }}</span>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('mypage.index') }}">マイページ</a>
                             </li>
                             <li class="nav-item">
@@ -54,6 +56,8 @@
         <footer class="bg-white shadow-sm mt-4 py-3">
             <div class="container text-center">
                 <a href="{{ route('contact.create') }}" class="btn btn-outline-secondary">お問い合わせ</a>
+                <a href="{{ route('mypage.index') }}" class="btn btn-outline-secondary">マイページ</a>
+                <a href="{{ route('product.index') }}" class="btn btn-outline-secondary">Home</a>
             </div>
         </footer>
     </div>

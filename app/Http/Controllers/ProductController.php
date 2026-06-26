@@ -71,7 +71,7 @@ class ProductController extends Controller
             'description' => 'required|string',
             'price' => 'required|integer|min:0',
             'stock' => 'required|integer|min:0',
-            'img_path' => 'nullable|image|max:2048',
+            'img_path' => 'required|image|max:2048',
         ]);
 
         $imgPath = null;
@@ -81,7 +81,7 @@ class ProductController extends Controller
 
         Product::updateProduct($product,$validatedData,$imgPath);
 
-        return redirect()->route('mypage.index');
+        return redirect()->route('product.ownerShow', $product->id);
     }
 
 

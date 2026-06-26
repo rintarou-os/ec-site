@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Contact;
 
@@ -10,7 +11,8 @@ class ContactController extends Controller
     //お問合せフォーム表示
     public function create()
     {
-        return view('contact.create');
+        $user = Auth::user();
+        return view('contact.create',compact('user'));
     }
 
     //お問い合わせ送信

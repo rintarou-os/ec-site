@@ -16,12 +16,11 @@ Route::get('/', [ProductController::class, 'index'])->name('product.index');
 // 商品検索、（非同期）
 Route::get('/products/search', [ProductController::class, 'search'])->name('product.search');
 
-// お問い合わせ
-Route::get('/contacts/create', [ContactController::class, 'create'])->name('contact.create');
-Route::post('/contacts', [ContactController::class, 'store'])->name('contact.store');
-
 // 要ログイン
 Route::middleware('auth')->group(function () {
+    // お問い合わせ
+    Route::get('/contacts/create', [ContactController::class, 'create'])->name('contact.create');
+    Route::post('/contacts', [ContactController::class, 'store'])->name('contact.store');
     // 商品新規登録
     Route::get('/products/create', [ProductController::class, 'create'])->name('product.create');
     Route::post('/products', [ProductController::class, 'store'])->name('product.store');

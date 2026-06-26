@@ -24,8 +24,11 @@ class PurchaseController extends Controller
 
         $product = Product::findOrFail($validatedData['product_id']);
 
-        Sale::createSale($product, $validatedData['quantity']);
-
+        try{
+            Sale::createSale($product,$validatedData['quantity']);
+        }catch (\Exception $e){
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
         return redirect()->route('product.index');
     }
 
