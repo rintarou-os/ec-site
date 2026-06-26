@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Contact;
+use App\Http\Requests\ContactRequest;
 
 class ContactController extends Controller
 {
@@ -16,13 +17,9 @@ class ContactController extends Controller
     }
 
     //お問い合わせ送信
-    public function store(Request $request)
+    public function store(ContactRequest $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'message' => 'required|string',
-        ]);
+        $validatedData = $request->validated();
         Contact::createContact($validatedData);
 
         return redirect()->route('product.index');

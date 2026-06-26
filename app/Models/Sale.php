@@ -30,7 +30,7 @@ class Sale extends Model
             throw new \Exception('この商品は在庫がありません。');
         }
 
-        if (quantity > $product->stock){
+        if ($quantity > $product->stock){
             throw new \Exception('在庫数を超えた数は購入できません。');
         }
 

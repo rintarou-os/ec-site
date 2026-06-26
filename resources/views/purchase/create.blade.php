@@ -20,6 +20,11 @@
             <form id="purchase-form" action="{{ route('purchase.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
+                @if ($errors->has('error'))
+                    <div class="alert alert-danger">
+                        {{ $errors->first('error') }}
+                    </div>
+                @endif
 
                 <div class="mb-3">
                     <label for="quantity" class="form-label">数量</label>

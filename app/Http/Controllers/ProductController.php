@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Http\Requests\ProductRequest;
+use App\Http\Requests\ProductUpdateRequest;
+
 
 class ProductController extends Controller
 {
@@ -35,15 +38,9 @@ class ProductController extends Controller
 
 
     //商品新規登録処理
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        $validatedData = $request->validate([
-            'product_name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|integer|min:0',
-            'stock' => 'required|integer|min:0',
-            'img_path' => 'required|image|max:2048',
-        ]);
+        $validatedData = $request->validated();
 
         $imgPath = null;
         if ($request->hasFile('img_path')){
@@ -64,15 +61,9 @@ class ProductController extends Controller
 
 
     //商品編集処理
-    public function update(Request $request,Product $product)
+    public function update(ProductUpdateRequest $request,Product $product)
     {
-        $validatedData = $request->validate([
-            'product_name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|integer|min:0',
-            'stock' => 'required|integer|min:0',
-            'img_path' => 'required|image|max:2048',
-        ]);
+        $validatedData = $request->validated();
 
         $imgPath = null;
         if ($request->hasFile('img_path')){
