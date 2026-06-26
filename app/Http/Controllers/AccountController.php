@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AccountRequest;
 
 class AccountController extends Controller
 {
@@ -15,16 +16,11 @@ class AccountController extends Controller
     }
 
     // アカウント更新処理
-    public function update(Request $request)
+    public function update(AccountRequest $request)
     {
         $user = Auth::user();
 
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'name_kanji' => 'required|string|max:255',
-            'name_kana' => 'nullable|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-        ]);
+        $validatedData = $request->validated();
 
         $user->updateAccount($validatedData);
 

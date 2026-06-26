@@ -18,10 +18,13 @@
         @foreach ($products as $product)
             <div class="col-md-4 mb-3">
                 <div class="card">
+                    @if ($product->img_path)
+                        <img src="{{ asset('storage/'. $product->img_path) }}" class="card-img-top" alt="{{ $product->product_name }}">
+                    @endif
                     <div class="card-body">
                         <h5 class="card-title">{{ $product->product_name }}</h5>
                         <p class="card-text">{{ $product->description }}</p>
-                        <p class="card-text">¥{{ number_format($product->price) }}</p>
+                        <p class="card-text">¥{{ number_format($product->price) }}</p>                        
                         <a href="{{ route('product.ownerShow', $product->id) }}" class="btn btn-outline-primary">詳細</a>
                     </div>
                 </div>
@@ -34,11 +37,15 @@
         @foreach ($sales as $sale)
             <div class="col-md-4 mb-3">
                 <div class="card">
+                    @if ($sale->product->img_path)
+                        <img src="{{asset('storage/'. $sale->product->img_path) }}" class="card-img-top" alt="{{ $sale->product->product_name }}">
+                    @endif
                     <div class="card-body">
                         <h5 class="card-title">{{ $sale->product->product_name }}</h5>
                         <p class="card-text">{{ $sale->product->description }}</p>
                         <p class="card-text">¥{{ number_format($sale->product->price) }}</p>
                         <p class="card-text">個数：{{ $sale->quantity }}</p>
+                        <p class="card-text">購入日：{{ $sale->created_at->format('Y/m/d') }}</p>                        
                     </div>
                 </div>
             </div>

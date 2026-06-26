@@ -7,21 +7,19 @@
     <form action="{{ route('contact.store') }}" method="POST">
         @csrf
 
-        <div class="mb-3">
-            <label for="name" class="form-label">名前</label>
-            <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}">
-            @error('name')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+        <div calss="mb-3">
+            <label class="form-label">名前</label>
+            <p>{{ $user->name }}</p>
         </div>
 
-        <div class="mb-3">
-            <label for="email" class="form-label">メールアドレス</label>
-            <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}">
-            @error('email')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
+       <div class="mb-3">
+        <label class="form-label">メールアドレス</label>
+        <P>{{ $user->email }}</p>
+       </div>
+
+       <input type="hidden" name="name" vlaue="{{ $user->name }}">
+       <input type="hidden" name="email" value="{{ $user->email }}">
+
 
         <div class="mb-3">
             <label for="message" class="form-label">お問い合わせ内容</label>

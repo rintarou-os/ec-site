@@ -25,6 +25,15 @@ class Sale extends Model
     //購入処理
     public static function createSale(Product $product, int $quantity, $userId = null)
     {
+        //在庫チェック
+        if ($product->stock <= 0){
+            throw new \Exception('この商品は在庫がありません。');
+        }
+
+        if ($quantity > $product->stock){
+            throw new \Exception('在庫数を超えた数は購入できません。');
+        }
+
         self::create([
             'user_id' => $userId ?? Auth::id(),
             'product_id' => $product->id,
@@ -37,6 +46,6 @@ class Sale extends Model
     //ユーザの購入履歴所得
     public static function getSalesByUser($userId)
     {
-        return self::where('user_id', $userId)->with('product')->latest()->get();
+        return self::where('user_id', $userId)->with('product')->orderBy('created_at','asc')->get();
     }
 }

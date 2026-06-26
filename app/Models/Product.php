@@ -41,7 +41,10 @@ class Product extends Model
     //商品一覧取得
     public static function getAllProducts()
     {
-        return self::where('stock','>',0)->latest()->get();
+        return self::where('stock','>',0)
+            ->where('user_id','!=',Auth::id())
+            ->orderBy('id','asc')
+            ->get();
     }
 
     public static function updateProduct(Product $product, array $validatedData, $imgPath)
@@ -58,7 +61,7 @@ class Product extends Model
     //ユーザの出品商品一覧
     public static function getProductsByUser($userId)
     {
-        return self::where('user_id',$userId)->latest()->get();
+        return self::where('user_id',$userId)->orderBy('id','asc')->get();
     }
 
     //商品新規登録
@@ -84,7 +87,8 @@ class Product extends Model
     // 商品検索
     public static function searchProducts(Request $request)
     {
-     $query = self::where('stock', '>', 0);
+     $query = self::where('stock', '>', 0)
+        ->where('user_id','!=',Auth::id());
 
         if ($request->filled('product_name')) {
             $query->where('product_name', 'like', '%' . $request->product_name . '%');
@@ -98,6 +102,6 @@ class Product extends Model
          $query->where('price', '<=', $request->max_price);
         }
 
-        return $query->latest()->get();
+        return $query->orderBy('id','asc')->get();
     }
 }

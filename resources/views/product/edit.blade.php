@@ -51,7 +51,7 @@
             @enderror
         </div>
 
-        <a href="{{ route('mypage.index') }}" class="btn btn-secondary">戻る</a>
+        <a href="{{ route('product.ownerShow',$product->id) }}" class="btn btn-secondary">戻る</a>
         <button type="submit" class="btn btn-primary">更新</button>
     </form>
 </div>

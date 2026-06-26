@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Sale;
 use App\Models\Product;
+use App\Http\Requests\PurchaseRequest;
 
 class PurchaseController extends Controller
 {
@@ -15,17 +16,17 @@ class PurchaseController extends Controller
     }
 
     // 購入処理
-    public function store(Request $request)
+    public function store(PurchaseRequest $request)
     {
-        $validatedData = $request->validate([
-            'product_id' => 'required|integer',
-            'quantity' => 'required|integer|min:1',
-        ]);
+        $validatedData = $request->validated();
 
         $product = Product::findOrFail($validatedData['product_id']);
 
-        Sale::createSale($product, $validatedData['quantity']);
-
+        try{
+            Sale::createSale($product,$validatedData['quantity']);
+        }catch (\Exception $e){
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
         return redirect()->route('product.index');
     }
 
